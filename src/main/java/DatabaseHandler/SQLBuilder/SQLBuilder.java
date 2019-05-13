@@ -9,6 +9,16 @@ public
     private StringBuilder query;
 
     /**
+     * Strings that often presents
+     * created for optimization
+     */
+    private static final String comma = ", ";
+    private static final String leftBracket = " ( ";
+    private static final String rightBracket = " ) ";
+    private static final String semicolon = ";";
+    private static final String apostrophe = "'";
+
+    /**
      *  Factory Method
      * @return SQLBuilder instance
      */
@@ -48,9 +58,9 @@ public
      */
 
     public SQLBuilder setColumns(String first, String... columns) {
-        this.query.append(" (").append(first);
-        for (String column : columns) this.query.append(", ").append(column);
-        this.query.append(") ");
+        this.query.append(leftBracket).append(first);
+        for (String column : columns) this.query.append(comma).append(column);
+        this.query.append(rightBracket);
         return this;
     }
 
@@ -61,9 +71,9 @@ public
      * @return this
      */
     public SQLBuilder setValues(Object first, Object... values) {
-        this.query.append(" (").append(setValuesTypeChecker(first));
-        for (var val:values) this.query.append(", ").append(val);
-        this.query.append("); ");
+        this.query.append(leftBracket).append(setValuesTypeChecker(first));
+        for (var val:values) this.query.append(comma).append(val);
+        this.query.append(rightBracket).append(semicolon);
         return this;
     }
 
@@ -73,7 +83,7 @@ public
      * @return val or modify val
      */
     private Object setValuesTypeChecker(Object val) {
-        if (val.getClass().getName().contains("String")) return "'" + val + "'";
+        if (val.getClass().getName().contains("String")) return apostrophe + val + apostrophe;
         else return val;
     }
 
