@@ -1,9 +1,20 @@
 package DatabaseHandler.SQLBuilder;
 
+/**
+ * @author F0urth
+ */
 public
     class SQLBuilder{
 
     private StringBuilder query;
+
+    /**
+     *  Factory Method
+     * @return SQLBuilder instance
+     */
+    public static SQLBuilder getInstance() {
+        return new SQLBuilder();
+    }
 
     private SQLBuilder() {
         this.query = new StringBuilder();
@@ -14,7 +25,7 @@ public
      * @param type
      * @return this
      */
-    private SQLBuilder addSQLKeyword(SQLKeyword type) {
+    public SQLBuilder addSQLKeyword(SQLKeyword type) {
         this.query.append(type.getCommand());
         return this;
     }
@@ -24,7 +35,7 @@ public
      * @param tableName
      * @return this
      */
-    private SQLBuilder setTable(String tableName) {
+    public SQLBuilder setTable(String tableName) {
         query.append(tableName);
         return this;
     }
@@ -36,7 +47,7 @@ public
      * @return this
      */
 
-    private SQLBuilder setColumns(String first, String... columns) {
+    public SQLBuilder setColumns(String first, String... columns) {
         this.query.append(" (").append(first);
         for (String column : columns) this.query.append(", ").append(column);
         this.query.append(") ");
@@ -49,14 +60,18 @@ public
      * @param values
      * @return this
      */
-    private SQLBuilder setValues(Object first, Object... values) {
+    public SQLBuilder setValues(Object first, Object... values) {
         this.query.append(" (").append(setValuesTypeChecker(first));
         for (var val:values) this.query.append(", ").append(val);
         this.query.append("); ");
         return this;
     }
 
-    // ADDING ' ' to string values
+    /**
+     * Help method => adding ' ' to the string class values
+     * @param val
+     * @return val or modify val
+     */
     private Object setValuesTypeChecker(Object val) {
         if (val.getClass().getName().contains("String")) return "'" + val + "'";
         else return val;
@@ -65,7 +80,7 @@ public
     /**
      * @return query in String format
      */
-    private String buildQuery() {
+    public String buildQuery() {
         return this.query.toString();
     }
 }
