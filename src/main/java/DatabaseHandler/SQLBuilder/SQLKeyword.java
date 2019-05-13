@@ -1,6 +1,9 @@
 package DatabaseHandler.SQLBuilder;
 
-
+/**
+ * @author F0urth
+ * Enum contains basic SQL Syntax
+ */
 public
     enum SQLKeyword
         implements CommandGetter {
@@ -8,50 +11,68 @@ public
     INSERT {
         private String command = null;
 
+        {
+            this.command = "INSERT INTO ";
+        }
+
         @Override
         public String getCommand() {
-            if (command == null) return (command = "INSERT INTO ");
-            else return command;
+            return command;
         }
     }, UPDATE {
         private String command = null;
 
+        {
+            this.command = "UPDATE ";
+        }
+
         @Override
         public String getCommand() {
-            if (command == null) return (command = "UPDATE ");
-            else return command;
+            return command;
         }
     }, DELETE {
         private String command = null;
 
+        {
+            this.command = "DELETE FROM ";
+        }
+
         @Override
         public String getCommand() {
-            if (command == null) return (command = "DELETE FROM ");
-            else return command;
+            return command;
         }
     }, SET {
         private String command = null;
 
+        {
+            this.command = command = " SET ";
+        }
+
         @Override
         public String getCommand() {
-            if (command == null) return (command = " SET ");
-            else return command;
+            return command;
         }
     }, WHERE {
         private String command = null;
 
+        {
+            this.command = command = " WHERE ";
+        }
+
         @Override
         public String getCommand() {
-            if (command == null) return (command = " WHERE ");
-            else return command;
+            return command;
         }
     }, VALUES {
         private String command = null;
 
+        {
+            this.command = " VALUES ";
+        }
+
         @Override
         public String getCommand() {
-            if (command == null) return (command = " VALUES ");
-            else return command;
+            return command;
         }
     }
 }
