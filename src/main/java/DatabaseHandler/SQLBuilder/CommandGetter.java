@@ -1,4 +1,4 @@
-package DatabaseHandler;
+package DatabaseHandler.SQLBuilder;
 
 interface CommandGetter {
     String getCommand();

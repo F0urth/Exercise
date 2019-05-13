@@ -1,6 +1,10 @@
-package DatabaseHandler;
+package DatabaseHandler.SQLBuilder;
 
-enum SQLKeyword implements CommandGetter{
+
+public
+    enum SQLKeyword
+        implements CommandGetter {
+
     INSERT {
         private String command = null;
 
