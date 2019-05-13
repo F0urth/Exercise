@@ -2,7 +2,8 @@ package DatabaseHandler.SQLBuilder;
 
 /**
  * @author F0urth
- * Enum contains basic SQL Syntax
+ * Enum contains basic SQL Syntax created to work with
+ * @see DatabaseHandler.SQLBuilder.SQLBuilder
  */
 public
     enum SQLKeyword
