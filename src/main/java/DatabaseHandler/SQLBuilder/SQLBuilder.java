@@ -1,9 +1,10 @@
 package DatabaseHandler.SQLBuilder;
 
 /**
- * @author F0urth
+ *
  * @see DatabaseHandler.SQLBuilder.SQLKeyword
  * @see DatabaseHandler.SQLBuilder.CommandGetter
+ * @author F0urth
  */
 public
     class SQLBuilder {

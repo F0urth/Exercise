@@ -47,7 +47,7 @@ public final
      * @return SQL query in String format based of properties of this class
      */
 
-    String buildSQLQuery() {
+    public String buildSQLQuery() {
         return SQLBuilder.newInstance()
             .addSQLKeyword(SQLKeyword.INSERT)
             .setTable(table_name)

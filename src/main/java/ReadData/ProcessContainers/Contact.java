@@ -27,7 +27,7 @@ public final
 
         /*
          * RFC 5322 Official Standard
-         * if we like to simplify this we can write simple \S+@\S+
+         * if we like to simplify this we can write simple `\S+@\S+`
          * and for example send veryfication email
          */
         emailPattern = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:" +
@@ -60,7 +60,7 @@ public final
      *
      * @return SQL query in String format based of properties of this class
      */
-    String buildQuery() {
+    public String buildSQLQuery() {
         return SQLBuilder.newInstance()
             .addSQLKeyword(SQLKeyword.INSERT)
             .setTable(table_name)
