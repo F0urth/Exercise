@@ -3,26 +3,22 @@ package ReadData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author F0urth
  */
 
 
-interface XMLReader {
+interface XMLReader extends Reader{
     default void readXML(BufferedReader reader) {
-        var args = new ArrayList<String>();
-        try (reader) {
-            String line;
-            while ((line = reader.readLine()) != null){
-                args.add(line);
-                if (args.size() > 10000) {
+        read(reader);
+    }
 
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Override
+    default List<String> process(List<String> data) {
 
+        return Collections.emptyList();
     }
 }

@@ -3,9 +3,7 @@ package ReadData;
 import DatabaseHandler.Controler;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -14,26 +12,25 @@ import java.util.concurrent.Executors;
  * @author F0urth
  */
 public
-    class Read
+    class FileReader
         implements XMLReader, CSVReader {
 
     private BufferedReader reader;
     private Executor service;
 
-    public static Read getInstance() {
-        return new Read();
+    public static FileReader getInstance() {
+        return new FileReader();
     }
 
-    private Read() {
+    private FileReader() {
         this.service = Executors
             .newFixedThreadPool(5);
     }
 
     public void read(String path) {
-
         try {
             reader = new BufferedReader(
-                new FileReader(path));
+                new java.io.FileReader(path));
             String firstLine;
             if ((firstLine = reader.readLine()).contains("xml"))
                 Controler.INSTANCE.addToRunnables(
@@ -45,4 +42,5 @@ public
             ex.printStackTrace();
         }
     }
+
 }

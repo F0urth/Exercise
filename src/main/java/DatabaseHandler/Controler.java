@@ -1,8 +1,7 @@
 package DatabaseHandler;
 
-import ReadData.Read;
+import ReadData.FileReader;
 
-import java.io.FileNotFoundException;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -16,12 +15,12 @@ public
     INSTANCE;
 
     private Database database;
-    private Read reader;
+    private FileReader reader;
     private Queue<Runnable> runnables;
 
     {
         this.database = Database.getInstance();
-        this.reader = Read.getInstance();
+        this.reader = FileReader.getInstance();
         this.runnables = new ConcurrentLinkedQueue<>();
     }
 
@@ -29,8 +28,12 @@ public
         this.runnables.add(task);
     }
 
-    public void setReader(String path) throws FileNotFoundException {
+    public Runnable getTask() {
+        return this.runnables.poll();
+    }
 
+    public void read(String path) {
+        this.reader.read(path);
     }
 
 
