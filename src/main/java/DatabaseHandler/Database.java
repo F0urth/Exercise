@@ -18,7 +18,7 @@ class Database {
      * Factory method
      * @return instance of the class
      */
-    static Database getInstance() {
+    static Database newInstance() {
         return new Database();
     }
 

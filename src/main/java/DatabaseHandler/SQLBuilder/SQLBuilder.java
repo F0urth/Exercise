@@ -24,7 +24,7 @@ public
      *  Factory Method
      * @return SQLBuilder instance
      */
-    public static SQLBuilder getInstance() {
+    public static SQLBuilder newInstance() {
         return new SQLBuilder();
     }
 

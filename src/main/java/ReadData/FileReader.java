@@ -1,9 +1,9 @@
 package ReadData;
 
 import DatabaseHandler.Controler;
+import ReadData.Readers.Reader;
 
 import java.io.BufferedReader;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -11,14 +11,15 @@ import java.util.concurrent.Executors;
 /**
  * @author F0urth
  */
+
 public
     class FileReader
-        implements XMLReader, CSVReader {
+        implements Reader {
 
     private BufferedReader reader;
     private Executor service;
 
-    public static FileReader getInstance() {
+    public static FileReader newInstance() {
         return new FileReader();
     }
 
@@ -34,13 +35,12 @@ public
             String firstLine;
             if ((firstLine = reader.readLine()).contains("xml"))
                 Controler.INSTANCE.addToRunnables(
-                    () -> readXML(reader));
+                    () -> read(reader));
             else
                 Controler.INSTANCE.addToRunnables(
-                    () -> readCSV(firstLine, reader));
+                    () -> read(firstLine, reader));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
 }

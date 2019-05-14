@@ -19,8 +19,8 @@ public
     private Queue<Runnable> runnables;
 
     {
-        this.database = Database.getInstance();
-        this.reader = FileReader.getInstance();
+        this.database = Database.newInstance();
+        this.reader = FileReader.newInstance();
         this.runnables = new ConcurrentLinkedQueue<>();
     }
 
