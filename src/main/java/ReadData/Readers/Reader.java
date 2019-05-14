@@ -1,8 +1,11 @@
 package ReadData.Readers;
 
+import DatabaseHandler.Controler;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author F0urth
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 public
     interface Reader
         extends CSVReader, XMLReader{
+
     /**
      * Take care of XMLFile
      * @param reader
@@ -22,7 +26,10 @@ public
             while ((line = reader.readLine()) != null){
                 args.add(line);
                 if (args.size() > 10000) {
-                    processXML(args);
+                    Controler.INSTANCE.insertQueries(processXML(args));
+                    while (true){
+                        if (!Controler.INSTANCE.isDBReady()) break;
+                    }
                 }
             }
         } catch (IOException e) {
@@ -43,7 +50,9 @@ public
             while ((line = reader.readLine()) != null){
                 args.add(line);
                 if (args.size() > 10000) {
-                    processCSV(args);
+                    Controler.INSTANCE
+                        .insertQueries(processCSV(args));
+
                 }
             }
         } catch (IOException e) {

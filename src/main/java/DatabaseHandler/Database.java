@@ -30,8 +30,12 @@ class Database {
      * Delegate method
      * @param queries
      */
-    public void insertQueries(List<String> queries) {
+    void insertQueries(List<String> queries) {
         this.connection.addToQueue(queries);
+    }
+
+    boolean isReady() {
+        return this.connection.isReady();
     }
 
     //---

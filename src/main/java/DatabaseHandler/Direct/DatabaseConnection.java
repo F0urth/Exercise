@@ -86,4 +86,8 @@ public
             }
         }
     }
+
+    public boolean isReady() {
+        return this.toSaveQueue.size() < 3;
+    }
 }

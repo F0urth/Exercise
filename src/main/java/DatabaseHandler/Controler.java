@@ -2,6 +2,7 @@ package DatabaseHandler;
 
 import ReadData.FileReader;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -36,5 +37,11 @@ public
         this.reader.read(path);
     }
 
+    public void insertQueries(List<String> queries) {
+        database.insertQueries(queries);
+    }
 
+    public boolean isDBReady() {
+        return this.database.isReady();
+    }
 }
