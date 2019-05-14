@@ -1,4 +1,8 @@
 package Main;
+/**
+ * in file README.MD you can see every note
+ */
+
 
 import ReadData.FileReader;
 
