@@ -10,8 +10,8 @@ import java.util.concurrent.*;
 
 /**
  * DatabaseConnection class
- * its work for localmachine database
- * loging as a root
+ * its work for local machine database
+ * logging as a root
  * without password
  *
  * @author F0urth
@@ -55,12 +55,13 @@ public
      * Execute at least once per 100 Milliseconds
      * oneIteration Method if the query will take more than
      * 100 milliseconds its gonna wait until finishing
+     * TODO Przemyśl czy dobrze że tu scheduleAtFixedRate
      */
 
     public void start() {
-        thread.scheduleWithFixedDelay(
-            this::oneIteration
-            , 1000, 100, TimeUnit.MILLISECONDS
+        thread.scheduleAtFixedRate(
+            this::oneIteration,
+            1000, 100, TimeUnit.MILLISECONDS
         );
     }
 
@@ -90,5 +91,4 @@ public
             }
         }
     }
-
 }

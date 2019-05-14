@@ -6,7 +6,6 @@ import ReadData.Read;
  * @author F0urth
  */
 
-
 public
     enum Controler {
     INSTANCE;
