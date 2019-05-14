@@ -1,6 +1,7 @@
 package DatabaseHandler;
 
-import DatabaseHandler.SQLBuilder.SQLKeyword;
+import DatabaseHandler.Direct.DatabaseConnection;
+
 
 /**
  * @author F0urth
@@ -8,11 +9,13 @@ import DatabaseHandler.SQLBuilder.SQLKeyword;
 
 class Database {
 
+    private DatabaseConnection connection;
+
     static Database getInstance() {
         return new Database();
     }
 
     private Database() {
-
+        this.connection = DatabaseConnection.INSTANCE;
     }
 }

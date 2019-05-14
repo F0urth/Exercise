@@ -6,7 +6,7 @@ package DatabaseHandler.SQLBuilder;
  * @see DatabaseHandler.SQLBuilder.CommandGetter
  */
 public
-    class SQLBuilder{
+    class SQLBuilder {
 
     private StringBuilder query;
 
@@ -61,7 +61,7 @@ public
 
     public SQLBuilder setColumns(String first, String... columns) {
         this.query.append(leftBracket).append(first);
-        for (String column : columns) this.query.append(comma).append(column);
+        for (var column : columns) this.query.append(comma).append(column);
         this.query.append(rightBracket);
         return this;
     }
@@ -74,7 +74,7 @@ public
      */
     public SQLBuilder setValues(Object first, Object... values) {
         this.query.append(leftBracket).append(setValuesTypeChecker(first));
-        for (var val:values) this.query.append(comma).append(val);
+        for (var val : values) this.query.append(comma).append(val);
         this.query.append(rightBracket).append(semicolon);
         return this;
     }
