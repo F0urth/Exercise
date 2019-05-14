@@ -3,6 +3,8 @@ package ReadData.ProcessContainers;
 import DatabaseHandler.SQLBuilder.SQLBuilder;
 import DatabaseHandler.SQLBuilder.SQLKeyword;
 
+import java.util.Optional;
+
 /**
  * Class mediate between read form file date and sql query in String format
  * @author F0urth
@@ -16,7 +18,7 @@ public final
     private Integer id;
     private String name;
     private String surname;
-    private Integer age;
+    private Optional<Integer> age;
 
     static {
         table_name = "CUSTOMERS";
@@ -38,7 +40,7 @@ public final
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.age = age;
+        this.age = Optional.ofNullable(age);
     }
 
     /**
@@ -50,7 +52,7 @@ public final
             .addSQLKeyword(SQLKeyword.INSERT)
             .setTable(table_name)
             .addSQLKeyword(SQLKeyword.VALUES)
-            .setValues(id, name, surname, age)
+            .setValues(id, name, surname, age.orElse(null))
             .buildQuery();
     }
 }

@@ -74,7 +74,7 @@ public
      */
     public SQLBuilder setValues(Object first, Object... values) {
         this.query.append(leftBracket).append(setValuesTypeChecker(first));
-        for (var val : values) this.query.append(comma).append(val);
+        for (var val : values) this.query.append(comma).append(setValuesTypeChecker(val));
         this.query.append(rightBracket).append(semicolon);
         return this;
     }
@@ -85,8 +85,8 @@ public
      * @return val or modify val
      */
     private Object setValuesTypeChecker(Object val) {
-        if (val.getClass().getName().contains("String")) return apostrophe + val + apostrophe;
-        else return val;
+        if (val == null || !val.getClass().getName().contains("String")) return val;
+        else return apostrophe + val + apostrophe;
     }
 
     /**
