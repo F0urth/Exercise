@@ -2,6 +2,7 @@ package DatabaseHandler.Direct;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Objects;
@@ -70,24 +71,18 @@ public
      */
     private void oneIteration() {
         if (!this.toSaveQueue.isEmpty()) {
-            Connection connection = null;
-            Statement statement = null;
             try {
                 Class.forName(JDBC_DRIVER);
                 //connection setup
-                connection = DriverManager.getConnection(DB_URL, user, password);
-                statement = connection.createStatement();
-                var query = String.join("\n", Objects.requireNonNull(this.toSaveQueue.poll()));
-                statement.execute(query);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            } finally {
-                try {
-                    if (statement != null) statement.close();
-                    if (connection != null) connection.close();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                try (Connection connection = DriverManager.getConnection(DB_URL, user, password)) {
+                    Statement statement = connection.createStatement();
+                    var query = String.join("\n", Objects.requireNonNull(this.toSaveQueue.poll()));
+                    statement.execute(query);
+                } catch (SQLException sqlEx) {
+                    for (var ex : sqlEx) ex.printStackTrace();
                 }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }

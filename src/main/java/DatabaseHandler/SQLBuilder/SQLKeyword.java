@@ -20,6 +20,7 @@ public
         public String getCommand() {
             return command;
         }
+
     }, UPDATE {
         private String command = null;
 
@@ -42,7 +43,9 @@ public
         public String getCommand() {
             return command;
         }
+
     }, SET {
+
         private String command = null;
 
         {
