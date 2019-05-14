@@ -3,6 +3,10 @@ package ReadData.ProcessContainers;
 import DatabaseHandler.SQLBuilder.SQLBuilder;
 import DatabaseHandler.SQLBuilder.SQLKeyword;
 
+/**
+ * @author F0urth
+ */
+
 public
     class Customer {
 

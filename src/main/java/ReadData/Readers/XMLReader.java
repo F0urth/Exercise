@@ -10,8 +10,6 @@ import java.util.List;
  * @author F0urth
  */
 
-
-
 interface XMLReader {
 
     default List<String> processXML(List<String> data) {
