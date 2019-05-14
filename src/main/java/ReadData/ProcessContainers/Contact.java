@@ -7,9 +7,7 @@ import java.util.regex.Pattern;
 
 
 /**
- * Class what represents Contact which gonna be translate into
- * data tho database
- *
+ * Class mediate between read form file date and sql query in String format
  * @author F0urth
  */
 
