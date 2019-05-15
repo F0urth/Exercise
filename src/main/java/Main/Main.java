@@ -21,6 +21,10 @@ public
     public static AtomicInteger idContact = new AtomicInteger(0);
 
     public static void main(String[] args) {
+
         var reader = FileReader.newInstance();
+
+        reader.read("/home/kamil/Projects/Java/Etap2Zadanie/data/dane-osoby.xml");
+
     }
 }

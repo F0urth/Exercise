@@ -4,7 +4,6 @@ import DatabaseHandler.Controler;
 import ReadData.Readers.Reader;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
@@ -44,6 +43,9 @@ public
                 e.printStackTrace();
             }
         }
+    }
 
+    public void execute(Runnable task) {
+        service.execute(task);
     }
 }

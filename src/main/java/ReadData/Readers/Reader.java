@@ -33,7 +33,6 @@ public
      */
     default void read(String path) {
         var args = new ArrayList<Builder>();
-
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
@@ -90,6 +89,7 @@ public
                         while (true) {
                             if (Controler.INSTANCE.isDBReady()) break;
                         }
+                        args = new ArrayList<>();
                     }
                 }
             }
@@ -100,6 +100,8 @@ public
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Controler.INSTANCE
+            .insertQueries(processXML(args));
     }
 
     /**
@@ -123,5 +125,7 @@ public
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Controler.INSTANCE
+            .insertQueries(processCSV(args));
     }
 }
