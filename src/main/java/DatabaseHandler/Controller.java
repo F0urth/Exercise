@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public
-    enum Controler {
+    enum Controller {
 
     INSTANCE;
 
@@ -27,28 +27,53 @@ public
         this.runnables = new ConcurrentLinkedQueue<>();
     }
 
+    /**
+     * add
+     * @param task
+     * to runnable queue
+     */
+
     public void addToRunnables(Runnable task) {
         System.out.println("ADDED to runnable queue");
         this.runnables.add(task);
         start();
     }
 
+    /**
+     *
+     * @return task from queue
+     */
     public Runnable getTask() {
         return this.runnables.poll();
     }
 
+    /**
+     * Read the data under this
+     * @param path
+     */
     public void read(String path) {
         this.reader.read(path);
     }
 
+    /**
+     * inset queries created by classes Customer and Contact
+     * @param queries
+     */
     public void insertQueries(List<String> queries) {
         database.insertQueries(queries);
     }
 
+    /**
+     *
+     * @return readiness of database
+     */
     public boolean isDBReady() {
         return this.database.isReady();
     }
 
+    /**
+     *
+     */
     private void start() {
         Executors.newSingleThreadScheduledExecutor()
             .scheduleAtFixedRate(

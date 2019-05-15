@@ -1,11 +1,10 @@
 package Main;
+
 /**
  * in file README.MD you can see every note
  */
 
-
-import DatabaseHandler.Controler;
-import ReadData.FileReader;
+import DatabaseHandler.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +16,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * Application Main
  * @author F0urth
  */
-
 
 public
     class Main {
@@ -34,7 +33,7 @@ public
             .filter(path -> path.toString().contains("dane-osoby"))
             .filter(path -> !path.toFile().isDirectory())
             .map(Path::toString)
-            .forEach(Controler.INSTANCE::read);
+            .forEach(Controller.INSTANCE::read);
 
 
         Executors.newSingleThreadExecutor()

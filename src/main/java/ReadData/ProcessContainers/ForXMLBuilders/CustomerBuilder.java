@@ -2,7 +2,11 @@ package ReadData.ProcessContainers.ForXMLBuilders;
 
 import ReadData.ProcessContainers.Customer;
 
-import java.util.Optional;
+/**
+ * Class is situational creator for class
+ * @see ReadData.ProcessContainers.Customer
+ * @author F0urth
+ */
 
 public
     class CustomerBuilder {
@@ -28,6 +32,11 @@ public
         this.age = age;
     }
 
+    /**
+     *
+     * @return new Instance of
+     * @see ReadData.ProcessContainers.Customer
+     */
     public Customer buildCustomer() {
         return Customer
             .newInstance(id, name, surname, age);

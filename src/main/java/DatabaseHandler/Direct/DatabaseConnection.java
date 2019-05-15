@@ -95,6 +95,10 @@ public
         }
     }
 
+    /**
+     *
+     * @return readiness of database
+     */
     public boolean isReady() {
         return this.toSaveQueue.size() < 3;
     }

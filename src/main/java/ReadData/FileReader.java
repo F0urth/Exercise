@@ -1,6 +1,6 @@
 package ReadData;
 
-import DatabaseHandler.Controler;
+import DatabaseHandler.Controller;
 import ReadData.Readers.Reader;
 
 import java.io.BufferedReader;
@@ -14,13 +14,17 @@ import java.util.concurrent.Executors;
  * @author F0urth
  */
 
-public
+public final
     class FileReader
         implements Reader {
 
     private BufferedReader reader;
     private Executor service;
 
+    /**
+     * Factory method
+     * @return new Instance
+     */
     public static FileReader newInstance() {
         return new FileReader();
     }
@@ -30,16 +34,21 @@ public
             .newFixedThreadPool(5);
     }
 
+    /**
+     * detected the type of file and make it runnable
+     * @param path
+     */
+
     public void read(String path) {
         if (path.endsWith(".xml")){
-            System.out.println("Deceted XML");
-            Controler.INSTANCE
+            System.out.println("Detected XML");
+            Controller.INSTANCE
                 .addToRunnables(() -> readXML(path));
         } else {
-            System.out.println("DECETED CSV");
+            System.out.println("Detected CSV");
             try {
                 this.reader = new BufferedReader(new java.io.FileReader(path, StandardCharsets.UTF_8));
-                Controler.INSTANCE
+                Controller.INSTANCE
                     .addToRunnables(() -> read(reader));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -47,6 +56,10 @@ public
         }
     }
 
+    /**
+     * execute a 'read' task in own service
+     * @param task
+     */
     public void execute(Runnable task) {
         System.out.println("Start executing");
         this.service.execute(task);

@@ -1,6 +1,6 @@
 package ReadData.Readers;
 
-import DatabaseHandler.Controler;
+import DatabaseHandler.Controller;
 import Main.Main;
 import ReadData.ProcessContainers.Builder;
 import ReadData.ProcessContainers.ForXMLBuilders.ContactBuilder;
@@ -29,6 +29,9 @@ public
 
     /**
      * Take care of XMLFile
+     * Method parse xml file and thought 'XMLBuilder' classes
+     * @see ReadData.ProcessContainers.ForXMLBuilders.ContactBuilder
+     * @see ReadData.ProcessContainers.ForXMLBuilders.CustomerBuilder
      * @param path
      */
     default void readXML(String path) {
@@ -85,10 +88,10 @@ public
                     }
                     args.add(customerBuilder.buildCustomer());
                     if (args.size() > 10000) {
-                        Controler.INSTANCE
+                        Controller.INSTANCE
                             .insertQueries(processXML(args));
                         while (true) {
-                            if (Controler.INSTANCE.isDBReady()) break;
+                            if (Controller.INSTANCE.isDBReady()) break;
                         }
                         args = new ArrayList<>();
                     }
@@ -101,7 +104,7 @@ public
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Controler.INSTANCE
+        Controller.INSTANCE
             .insertQueries(processXML(args));
         System.out.println("readed data");
     }
@@ -117,17 +120,17 @@ public
             while ((line = reader.readLine()) != null){
                 args.add(line);
                 if (args.size() > 10000) {
-                    Controler.INSTANCE
+                    Controller.INSTANCE
                         .insertQueries(processCSV(args));
                     while (true){
-                        if (Controler.INSTANCE.isDBReady()) break;
+                        if (Controller.INSTANCE.isDBReady()) break;
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Controler.INSTANCE
+        Controller.INSTANCE
             .insertQueries(processCSV(args));
     }
 }

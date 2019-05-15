@@ -2,6 +2,12 @@ package ReadData.ProcessContainers.ForXMLBuilders;
 
 import ReadData.ProcessContainers.Contact;
 
+
+/**
+ * Situational Creator for class
+ * @see ReadData.ProcessContainers.Contact
+ * @author F0urth
+ */
 public
     class ContactBuilder {
 
@@ -26,6 +32,10 @@ public
         this.contact = contact;
     }
 
+    /**
+     * @return new of instance Contact
+     * @see ReadData.ProcessContainers.Contact
+     */
     public Contact buildContact() {
         return Contact
             .newInstance(id, id_customer, type, contact);
