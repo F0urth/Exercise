@@ -1,10 +1,9 @@
 package ReadData.Readers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import ReadData.ProcessContainers.Builder;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author F0urth
@@ -12,11 +11,9 @@ import java.util.List;
 
 interface XMLReader {
 
-    default List<String> processXML(List<String> data) {
-        var res = new ArrayList<String>();
-
-
-
-        return res;
+    default List<String> processXML(List<Builder> data) {
+        return data.stream()
+            .map(Builder::buildSQLQuery)
+            .collect(Collectors.toList());
     }
 }

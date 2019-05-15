@@ -5,6 +5,8 @@ import ReadData.Readers.Reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -35,10 +37,10 @@ public
                 .addToRunnables(() -> read(path));
         } else {
             try {
-                this.reader = new BufferedReader(new java.io.FileReader(path));
+                this.reader = new BufferedReader(new java.io.FileReader(path, StandardCharsets.UTF_8));
                 Controler.INSTANCE
                     .addToRunnables(() -> read(reader));
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

@@ -16,10 +16,10 @@ public final
 
     private static final String table_name;
 
-    private Integer id;
-    private String name;
-    private String surname;
-    private Optional<Integer> age;
+    private final Integer id;
+    private final String name;
+    private final String surname;
+    private final Optional<Integer> age;
 
     static {
         table_name = "CUSTOMERS";
