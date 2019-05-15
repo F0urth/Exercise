@@ -10,7 +10,7 @@ public
     private Integer id;
     private String name;
     private String surname;
-    private Optional<Integer> age;
+    private Integer age = null;
 
     public void setId(Integer id) {
         this.id = id;
@@ -24,12 +24,12 @@ public
         this.surname = surname;
     }
 
-    public void setAge(Optional<Integer> age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
     public Customer buildCustomer() {
         return Customer
-            .newInstance(id, name, surname, age.orElse(null));
+            .newInstance(id, name, surname, age);
     }
 }

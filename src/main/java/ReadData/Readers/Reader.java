@@ -1,7 +1,10 @@
 package ReadData.Readers;
 
 import DatabaseHandler.Controler;
+import Main.Main;
 import ReadData.ProcessContainers.Builder;
+import ReadData.ProcessContainers.ForXMLBuilders.ContactBuilder;
+import ReadData.ProcessContainers.ForXMLBuilders.CustomerBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -40,29 +43,56 @@ public
                 Node p = persons.item(i);
                 if (p.getNodeType() == Node.ELEMENT_NODE) {
                     Element person = (Element) p;
+                    var customerBuilder = new CustomerBuilder();
+                    var id = Main.idCustomers.getAndIncrement();
+                    customerBuilder.setId(id);
                     NodeList atributes = person.getChildNodes();
                     for (int j = 0; j < atributes.getLength(); j++) {
                         var atrib = atributes.item(j);
                         if (atrib.getNodeType() == Node.ELEMENT_NODE) {
                             Element val = (Element) atrib;
-                            if (val.getTagName().equals("age")) {
-                                System.out.println("Mamy wiek: " + val.getTextContent());
-                            }
-                            if (val.getTagName().equals("contacts")) {
-                                var contacts = val.getChildNodes();
-                                for (int k = 0; k < contacts.getLength(); k++) {
-                                    var contactNode = contacts.item(k);
-                                    if (contactNode.getNodeType() == Node.ELEMENT_NODE) {
-                                        var contact = (Element) contactNode;
-                                        System.out.println("Kontakt typu: " + contact.getTagName() + " content " + contact.getTextContent());
+                            switch (val.getTagName()) {
+                                case "age":
+                                    customerBuilder.setAge(Integer.valueOf(val.getTextContent()));
+                                    break;
+                                case "name":
+                                    customerBuilder.setName(val.getTextContent());
+                                    break;
+                                case "surname":
+                                    customerBuilder.setSurname(val.getTextContent());
+                                    break;
+                                case "contacts":
+                                    var contacts = val.getChildNodes();
+                                    for (int k = 0; k < contacts.getLength(); k++) {
+                                        var contactNode = contacts.item(k);
+                                        if (contactNode.getNodeType() == Node.ELEMENT_NODE) {
+                                            var contactBuilder = new ContactBuilder();
+                                            var contacId = Main.idContact.getAndIncrement();
+                                            contactBuilder.setId_customer(id);
+                                            contactBuilder.setId(contacId);
+                                            var contact = (Element) contactNode;
+                                            var type = contact.getTagName();
+                                            contactBuilder.setType(
+                                                (type.equals("phone")) ? 2 : (type.equals("email")) ? 1 :
+                                                    (type.equals("jabber")) ? 3 : 0);
+                                            contactBuilder.setContact(contact.getTextContent());
+                                            args.add(contactBuilder.buildContact());
+                                        }
                                     }
-                                }
+                                    break;
                             }
+                        }
+                    }
+                    args.add(customerBuilder.buildCustomer());
+                    if (args.size() > 10000) {
+                        Controler.INSTANCE
+                            .insertQueries(processXML(args));
+                        while (true) {
+                            if (Controler.INSTANCE.isDBReady()) break;
                         }
                     }
                 }
             }
-
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -70,7 +100,6 @@ public
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**

@@ -83,10 +83,11 @@ public final
             return 0;
         else if (emailPattern.matcher(contact).matches())
             return 1;
-        else if (trim.matches("[0-9]+"))
+        else if (trim.matches("[0-9]+") && trim.length() == 9)
             return 2;
         else
             return 3;
+
 
     }
 }
