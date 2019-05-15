@@ -76,14 +76,22 @@ public
                 //connection setup
                 try (Connection connection = DriverManager.getConnection(DB_URL, user, password)) {
                     Statement statement = connection.createStatement();
-                    var query = String.join("\n", Objects.requireNonNull(this.toSaveQueue.poll()));
-                    statement.execute(query);
+                    //var query = String.join("\n", Objects.requireNonNull(this.toSaveQueue.poll()));
+                    Objects.requireNonNull(this.toSaveQueue.poll()).forEach(
+                        sql -> {
+                            try {
+                                statement.execute(sql);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                    });
                 } catch (SQLException sqlEx) {
                     for (var ex : sqlEx) ex.printStackTrace();
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+            System.out.println("Insert Data");
         }
     }
 

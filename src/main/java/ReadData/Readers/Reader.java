@@ -31,7 +31,8 @@ public
      * Take care of XMLFile
      * @param path
      */
-    default void read(String path) {
+    default void readXML(String path) {
+        System.out.println("Start reading");
         var args = new ArrayList<Builder>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -102,6 +103,7 @@ public
         }
         Controler.INSTANCE
             .insertQueries(processXML(args));
+        System.out.println("readed data");
     }
 
     /**

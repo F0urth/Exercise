@@ -31,7 +31,10 @@ class Database {
      * @param queries
      */
     void insertQueries(List<String> queries) {
+        this.connection.start();
         this.connection.addToQueue(queries);
+        System.out.println("Gonna insert queries");
+        queries.forEach(System.out::println);
     }
 
     boolean isReady() {

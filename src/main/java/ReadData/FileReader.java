@@ -32,9 +32,11 @@ public
 
     public void read(String path) {
         if (path.endsWith(".xml")){
+            System.out.println("Deceted XML");
             Controler.INSTANCE
-                .addToRunnables(() -> read(path));
+                .addToRunnables(() -> readXML(path));
         } else {
+            System.out.println("DECETED CSV");
             try {
                 this.reader = new BufferedReader(new java.io.FileReader(path, StandardCharsets.UTF_8));
                 Controler.INSTANCE
@@ -46,6 +48,7 @@ public
     }
 
     public void execute(Runnable task) {
-        service.execute(task);
+        System.out.println("Start executing");
+        this.service.execute(task);
     }
 }
