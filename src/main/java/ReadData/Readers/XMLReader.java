@@ -13,6 +13,10 @@ import java.util.List;
 interface XMLReader {
 
     default List<String> processXML(List<String> data) {
-        return null;
+        var res = new ArrayList<String>();
+
+
+
+        return res;
     }
 }

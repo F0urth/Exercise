@@ -11,7 +11,8 @@ import java.util.Optional;
  */
 
 public final
-    class Customer {
+    class Customer
+        extends Builder{
 
     private static final String table_name;
 
@@ -47,6 +48,7 @@ public final
      * @return SQL query in String format based of properties of this class
      */
 
+    @Override
     public String buildSQLQuery() {
         return SQLBuilder.newInstance()
             .addSQLKeyword(SQLKeyword.INSERT)

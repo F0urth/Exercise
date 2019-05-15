@@ -4,6 +4,7 @@ import DatabaseHandler.Controler;
 import ReadData.Readers.Reader;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -29,18 +30,18 @@ public
     }
 
     public void read(String path) {
-        try {
-            reader = new BufferedReader(
-                new java.io.FileReader(path));
-            String firstLine;
-            if ((firstLine = reader.readLine()).contains("xml"))
-                Controler.INSTANCE.addToRunnables(
-                    () -> read(reader));
-            else
-                Controler.INSTANCE.addToRunnables(
-                    () -> read(firstLine, reader));
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (path.endsWith(".xml")){
+            Controler.INSTANCE
+                .addToRunnables(() -> read(path));
+        } else {
+            try {
+                this.reader = new BufferedReader(new java.io.FileReader(path));
+                Controler.INSTANCE
+                    .addToRunnables(() -> read(reader));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 }

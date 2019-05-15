@@ -12,7 +12,8 @@ import java.util.regex.Pattern;
  */
 
 public final
-    class Contact {
+    class Contact
+        extends Builder{
 
     private static final String table_name;
     private static final Pattern emailPattern;
@@ -60,6 +61,8 @@ public final
      *
      * @return SQL query in String format based of properties of this class
      */
+
+    @Override
     public String buildSQLQuery() {
         return SQLBuilder.newInstance()
             .addSQLKeyword(SQLKeyword.INSERT)
