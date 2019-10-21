@@ -3,8 +3,8 @@ package ReadData.Readers;
 import DatabaseHandler.Controller;
 import Main.Main;
 import ReadData.ProcessContainers.Builder;
-import ReadData.ProcessContainers.ForXMLBuilders.ContactBuilder;
-import ReadData.ProcessContainers.ForXMLBuilders.CustomerBuilder;
+import ReadData.ProcessContainers.Contact;
+import ReadData.ProcessContainers.Customer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,16 +23,15 @@ import java.util.ArrayList;
  * @author F0urth
  */
 
-public
-    interface Reader
-        extends CSVReader, XMLReader{
+public interface Reader extends CSVReader, XMLReader {
 
     /**
      * Take care of XMLFile
      * Method parse xml file and thought 'XMLBuilder' classes
-     * @see ReadData.ProcessContainers.ForXMLBuilders.ContactBuilder
-     * @see ReadData.ProcessContainers.ForXMLBuilders.CustomerBuilder
+     *
      * @param path
+     * @see Contact.ContactBuilder
+     * @see Customer.CustomerBuilder
      */
     default void readXML(String path) {
         System.out.println("Start reading");
@@ -46,8 +45,8 @@ public
                 Node p = persons.item(i);
                 if (p.getNodeType() == Node.ELEMENT_NODE) {
                     Element person = (Element) p;
-                    var customerBuilder = new CustomerBuilder();
-                    var id = Main.idCustomers.getAndIncrement();
+                    var customerBuilder = new Customer.CustomerBuilder();
+                    var id = Main.IdsContainor.ID_CUSTOMER.getAndIncrement();
                     customerBuilder.setId(id);
                     NodeList atributes = person.getChildNodes();
                     for (int j = 0; j < atributes.getLength(); j++) {
@@ -69,15 +68,17 @@ public
                                     for (int k = 0; k < contacts.getLength(); k++) {
                                         var contactNode = contacts.item(k);
                                         if (contactNode.getNodeType() == Node.ELEMENT_NODE) {
-                                            var contactBuilder = new ContactBuilder();
-                                            var contacId = Main.idContact.getAndIncrement();
+                                            var contactBuilder = new Contact.ContactBuilder();
+                                            var contacId = Main.IdsContainor.ID_CONTACT.getAndIncrement();
                                             contactBuilder.setId_customer(id);
                                             contactBuilder.setId(contacId);
                                             var contact = (Element) contactNode;
                                             var type = contact.getTagName();
                                             contactBuilder.setType(
-                                                (type.equals("phone")) ? 2 : (type.equals("email")) ? 1 :
-                                                    (type.equals("jabber")) ? 3 : 0);
+                                                (type.equals("phone")) ? Contact.ContactType.PHONE :
+                                                    (type.equals("email")) ? Contact.ContactType.EMAIL :
+                                                    (type.equals("jabber")) ? Contact.ContactType.JABBER :
+                                                        Contact.ContactType.UNKNOWN);
                                             contactBuilder.setContact(contact.getTextContent());
                                             args.add(contactBuilder.buildContact());
                                         }
@@ -91,46 +92,44 @@ public
                         Controller.INSTANCE
                             .insertQueries(processXML(args));
                         while (true) {
-                            if (Controller.INSTANCE.isDBReady()) break;
+                            if (Controller.INSTANCE.isDBReady()) {
+                                break;
+                            }
                         }
                         args = new ArrayList<>();
                     }
                 }
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-        Controller.INSTANCE
-            .insertQueries(processXML(args));
+        Controller.INSTANCE.insertQueries(processXML(args));
         System.out.println("readed data");
     }
 
     /**
      * Take care of CSVFile
+     *
      * @param reader
      */
     default void read(BufferedReader reader) {
         var args = new ArrayList<String>();
         try (reader) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 args.add(line);
                 if (args.size() > 10000) {
-                    Controller.INSTANCE
-                        .insertQueries(processCSV(args));
-                    while (true){
-                        if (Controller.INSTANCE.isDBReady()) break;
+                    Controller.INSTANCE.insertQueries(processCSV(args));
+                    while (true) {
+                        if (Controller.INSTANCE.isDBReady()) {
+                            break;
+                        }
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Controller.INSTANCE
-            .insertQueries(processCSV(args));
+        Controller.INSTANCE.insertQueries(processCSV(args));
     }
 }

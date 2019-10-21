@@ -12,8 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author F0urth
  */
 
-public
-    enum Controller {
+public enum Controller {
 
     INSTANCE;
 
@@ -21,7 +20,7 @@ public
     private FileReader reader;
     private Queue<Runnable> runnables;
 
-    {
+    Controller() {
         this.database = Database.newInstance();
         this.reader = FileReader.newInstance();
         this.runnables = new ConcurrentLinkedQueue<>();
@@ -29,8 +28,8 @@ public
 
     /**
      * add
-     * @param task
-     * to runnable queue
+     *
+     * @param task to runnable queue
      */
 
     public void addToRunnables(Runnable task) {
@@ -40,7 +39,6 @@ public
     }
 
     /**
-     *
      * @return task from queue
      */
     public Runnable getTask() {
@@ -49,6 +47,7 @@ public
 
     /**
      * Read the data under this
+     *
      * @param path
      */
     public void read(String path) {
@@ -57,6 +56,7 @@ public
 
     /**
      * inset queries created by classes Customer and Contact
+     *
      * @param queries
      */
     public void insertQueries(List<String> queries) {
@@ -64,7 +64,6 @@ public
     }
 
     /**
-     *
      * @return readiness of database
      */
     public boolean isDBReady() {
@@ -78,14 +77,12 @@ public
         Executors.newSingleThreadScheduledExecutor()
             .scheduleAtFixedRate(
                 this::oneIteration,
-                50, 50, TimeUnit.MILLISECONDS
-            );
+                50, 50, TimeUnit.MILLISECONDS);
     }
 
     private void oneIteration() {
         if (!this.runnables.isEmpty()) {
-            this.reader
-                .execute(getTask());
+            this.reader.execute(getTask());
         }
     }
 }

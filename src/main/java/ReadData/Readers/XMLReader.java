@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * Interface to change 'Class type data' into SQL queries
+ *
  * @author F0urth
  */
 

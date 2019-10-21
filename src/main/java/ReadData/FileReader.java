@@ -14,15 +14,14 @@ import java.util.concurrent.Executors;
  * @author F0urth
  */
 
-public final
-    class FileReader
-        implements Reader {
+public final class FileReader implements Reader {
 
     private BufferedReader reader;
     private Executor service;
 
     /**
      * Factory method
+     *
      * @return new Instance
      */
     public static FileReader newInstance() {
@@ -30,17 +29,17 @@ public final
     }
 
     private FileReader() {
-        this.service = Executors
-            .newFixedThreadPool(5);
+        this.service = Executors.newFixedThreadPool(5);
     }
 
     /**
      * detected the type of file and make it runnable
+     *
      * @param path
      */
 
     public void read(String path) {
-        if (path.endsWith(".xml")){
+        if (path.endsWith(".xml")) {
             System.out.println("Detected XML");
             Controller.INSTANCE
                 .addToRunnables(() -> readXML(path));
@@ -48,8 +47,7 @@ public final
             System.out.println("Detected CSV");
             try {
                 this.reader = new BufferedReader(new java.io.FileReader(path, StandardCharsets.UTF_8));
-                Controller.INSTANCE
-                    .addToRunnables(() -> read(reader));
+                Controller.INSTANCE.addToRunnables(() -> read(reader));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -58,6 +56,7 @@ public final
 
     /**
      * execute a 'read' task in own service
+     *
      * @param task
      */
     public void execute(Runnable task) {

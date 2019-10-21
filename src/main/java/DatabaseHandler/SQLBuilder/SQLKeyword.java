@@ -5,78 +5,24 @@ package DatabaseHandler.SQLBuilder;
  * Enum contains basic SQL Syntax created to work with
  * @see DatabaseHandler.SQLBuilder.SQLBuilder
  */
-public
-    enum SQLKeyword
-        implements CommandGetter {
+public enum SQLKeyword {
 
-    INSERT {
-        private String command = null;
+    INSERT("INSERT INTO "),
+    UPDATE("UPDATE "),
+    DELETE("DELETE FROM "),
+    SET(" SET "),
+    WHERE(" WHERE "),
+    VALUES(" VALUES "),
+    SELECT("SELECT ");
 
-        {
-            this.command = "INSERT INTO ";
-        }
+    private String command;
 
-        @Override
-        public String getCommand() {
-            return command;
-        }
 
-    }, UPDATE {
-        private String command = null;
+    SQLKeyword(String command) {
+        this.command = command;
+    }
 
-        {
-            this.command = "UPDATE ";
-        }
-
-        @Override
-        public String getCommand() {
-            return command;
-        }
-    }, DELETE {
-        private String command = null;
-
-        {
-            this.command = "DELETE FROM ";
-        }
-
-        @Override
-        public String getCommand() {
-            return command;
-        }
-
-    }, SET {
-
-        private String command = null;
-
-        {
-            this.command = command = " SET ";
-        }
-
-        @Override
-        public String getCommand() {
-            return command;
-        }
-    }, WHERE {
-        private String command = null;
-
-        {
-            this.command = command = " WHERE ";
-        }
-
-        @Override
-        public String getCommand() {
-            return command;
-        }
-    }, VALUES {
-        private String command = null;
-
-        {
-            this.command = " VALUES ";
-        }
-
-        @Override
-        public String getCommand() {
-            return command;
-        }
+    public String getCommand() {
+        return this.command;
     }
 }
