@@ -27,11 +27,11 @@ interface CSVReader {
         var res = new ArrayList<String>();
         for (var item : data) {
             var tab = item.split(Consts.CSV_SPLITTER_REGEX);
-            var idCustomer = Main.IdsContainor.ID_CUSTOMER.getAndIncrement();
+            var idCustomer = Main.Main.IdsContainer.ID_CUSTOMER.getAndIncrement();
             res.add(Customer.newInstance(idCustomer, tab[Consts.NAME_INDEX].trim(), tab[Consts.SURNAME_INDEX].trim(),
                 (tab[Consts.AGE_INDEX].isBlank()) ? null : Integer.valueOf(tab[Consts.AGE_INDEX].trim())).buildSQLQuery());
             for (int i = Consts.CONTACTS_START_POINT; i < tab.length; i++) {
-                var idContact = Main.IdsContainor.ID_CONTACT.getAndIncrement();
+                var idContact = Main.Main.IdsContainer.ID_CONTACT.getAndIncrement();
                 res.add(Contact.newInstance(idContact, idCustomer, Contact.getContactType(tab[i]), tab[i]).buildSQLQuery());
             }
         }

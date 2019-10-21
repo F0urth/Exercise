@@ -35,12 +35,12 @@ public enum DatabaseConnection {
      */
     private final String DB_URL;
     private final String JDBC_DRIVER;
-    private final String user;
-    private final String password;
+    private final String USER;
+    private final String PASSWORD;
     private ScheduledExecutorService thread;
     private Queue<List<String>> toSaveQueue;
 
-    //Driver and url
+
     DatabaseConnection() {
         Properties prop = new Properties();
         try {
@@ -53,8 +53,8 @@ public enum DatabaseConnection {
             e.printStackTrace();
             throw new IllegalStateException("Can't load config file");
         }
-        this.user = prop.getProperty("db.user");
-        this.password = prop.getProperty("db.password");
+        this.USER = prop.getProperty("db.user");
+        this.PASSWORD = prop.getProperty("db.password");
         this.DB_URL = prop.getProperty("db.url");
         this.JDBC_DRIVER = prop.getProperty("db.jdbc.driver");
         this.thread = Executors.newSingleThreadScheduledExecutor();
@@ -84,7 +84,7 @@ public enum DatabaseConnection {
         if (!this.toSaveQueue.isEmpty()) {
             try {
                 Class.forName(JDBC_DRIVER);
-                try (Connection connection = DriverManager.getConnection(DB_URL, user, password)) {
+                try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
                     Statement statement = connection.createStatement();
                     Objects.requireNonNull(this.toSaveQueue.poll()).forEach(
                         sql -> {

@@ -25,6 +25,8 @@ import java.util.ArrayList;
 
 public interface Reader extends CSVReader, XMLReader {
 
+    Integer BATCH_SIZE = 10000;
+
     /**
      * Take care of XMLFile
      * Method parse xml file and thought 'XMLBuilder' classes
@@ -39,14 +41,14 @@ public interface Reader extends CSVReader, XMLReader {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-            Document document = documentBuilder.parse("/home/kamil/Projects/Java/Etap2Zadanie/data/dane-osoby.xml");
+            Document document = documentBuilder.parse(path);
             NodeList persons = document.getElementsByTagName("person");
             for (int i = 0; i < persons.getLength(); i++) {
                 Node p = persons.item(i);
                 if (p.getNodeType() == Node.ELEMENT_NODE) {
                     Element person = (Element) p;
                     var customerBuilder = new Customer.CustomerBuilder();
-                    var id = Main.IdsContainor.ID_CUSTOMER.getAndIncrement();
+                    var id = Main.Main.IdsContainer.ID_CUSTOMER.getAndIncrement();
                     customerBuilder.setId(id);
                     NodeList atributes = person.getChildNodes();
                     for (int j = 0; j < atributes.getLength(); j++) {
@@ -69,7 +71,7 @@ public interface Reader extends CSVReader, XMLReader {
                                         var contactNode = contacts.item(k);
                                         if (contactNode.getNodeType() == Node.ELEMENT_NODE) {
                                             var contactBuilder = new Contact.ContactBuilder();
-                                            var contacId = Main.IdsContainor.ID_CONTACT.getAndIncrement();
+                                            var contacId = Main.Main.IdsContainer.ID_CONTACT.getAndIncrement();
                                             contactBuilder.setId_customer(id);
                                             contactBuilder.setId(contacId);
                                             var contact = (Element) contactNode;
@@ -88,7 +90,7 @@ public interface Reader extends CSVReader, XMLReader {
                         }
                     }
                     args.add(customerBuilder.buildCustomer());
-                    if (args.size() > 10000) {
+                    if (args.size() > BATCH_SIZE) {
                         Controller.INSTANCE
                             .insertQueries(processXML(args));
                         while (true) {
@@ -118,7 +120,7 @@ public interface Reader extends CSVReader, XMLReader {
             String line;
             while ((line = reader.readLine()) != null) {
                 args.add(line);
-                if (args.size() > 10000) {
+                if (args.size() > BATCH_SIZE) {
                     Controller.INSTANCE.insertQueries(processCSV(args));
                     while (true) {
                         if (Controller.INSTANCE.isDBReady()) {

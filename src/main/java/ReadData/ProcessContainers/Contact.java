@@ -70,7 +70,7 @@ public final class Contact extends Builder {
      * Checking Type of the Contact
      *
      * @param contact
-     * @return Type of the Contact (integer - 0 - unknown, 1 - email, 2 - phone, 3- jabber)
+     * @return ContactType
      */
     public static ContactType getContactType(String contact) {
         String trim = contact.trim();

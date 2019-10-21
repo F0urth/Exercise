@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 
-    public static class IdsContainor {
+    public static class IdsContainer {
         public static AtomicInteger ID_CUSTOMER = new AtomicInteger(0);
         public static AtomicInteger ID_CONTACT = new AtomicInteger(0);
     }
